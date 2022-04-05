@@ -59,8 +59,7 @@ class Search:
                     title=itemResult["title"]
                     contentId=itemResult["contentId"]
                     link =itemResult["url"]
-                    #sacar el sectionTag  es un arrar array dentro title
-                    section=itemResult["sectionTag"][0]["title"]
+                    section=itemResult["category"]
                     type=itemResult["type"]
                     cls.save_item(title,contentId,link,type,section)
                 except Exception as err:
@@ -75,3 +74,5 @@ class Search:
         cls.list_videos=[]
         cls.list_galleries=[]
         cls.dictionary={"notas":None,"galerias":None,"videos":None}  
+
+print(Search.find_news("videos"))
