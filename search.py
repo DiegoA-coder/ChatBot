@@ -1,3 +1,4 @@
+from jmespath import search
 import requests
 import json   
 
@@ -6,12 +7,13 @@ class Search:
     list_note=[]
     list_videos=[]
     list_galleries=[]
+    list_sections=[]
     dictionary={"notas":None,"galerias":None,"videos":None}  
 
     @classmethod
-    def save_item(cls,title,contentId,link,type):
-        if (title != "" and contentId != "" and link != "" and type != ""):
-            itemdictionary={"link":link,"contentId":contentId,"title":title}
+    def save_item(cls,title,contentId,link,type,section):
+        if (title != "" and contentId != "" and link != "" and type != "" and section != ""):
+            itemdictionary={"link":link,"contentId":contentId,"title":title,"section":section}
             if (type=="article"):
                 cls.list_note.append(itemdictionary)
             elif (type=="gallery"):
@@ -36,8 +38,16 @@ class Search:
                 print("Error occurred in request")
                 return None
         except Exception as err:
-            print(f'Error occurred: {err}')
+            print(f'Error occurred in request: {err}')
             return None
+
+    @classmethod
+    def find_section(cls,array_section):  
+        section=array_section["sectionTag"]
+        for itemSection in section:
+            cls.list_sections.append(itemSection["title"])
+        return cls.list_sections
+
     
     @classmethod
     def find_news(cls,word):
@@ -58,8 +68,10 @@ class Search:
                     title=itemResult["title"]
                     contentId=itemResult["contentId"]
                     link =itemResult["url"]
+                    #sacar el sectionTag  es un arrar array dentro title
+                    section=itemResult["sectionTag"][0]["title"]
                     type=itemResult["type"]
-                    cls.save_item(title,contentId,link,type)
+                    cls.save_item(title,contentId,link,type,section)
                 except Exception as err:
                     print(f'Error occurred: {err}')
 
@@ -72,3 +84,4 @@ class Search:
         cls.list_videos=[]
         cls.list_galleries=[]
         cls.dictionary={"notas":None,"galerias":None,"videos":None}  
+
