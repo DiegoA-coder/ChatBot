@@ -1,4 +1,3 @@
-from jmespath import search
 import requests
 import json   
 
@@ -40,14 +39,6 @@ class Search:
         except Exception as err:
             print(f'Error occurred in request: {err}')
             return None
-
-    @classmethod
-    def find_section(cls,array_section):  
-        section=array_section["sectionTag"]
-        for itemSection in section:
-            cls.list_sections.append(itemSection["title"])
-        return cls.list_sections
-
     
     @classmethod
     def find_news(cls,word):
@@ -84,4 +75,3 @@ class Search:
         cls.list_videos=[]
         cls.list_galleries=[]
         cls.dictionary={"notas":None,"galerias":None,"videos":None}  
-
