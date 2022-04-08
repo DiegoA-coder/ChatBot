@@ -74,5 +74,3 @@ class Search:
         cls.list_videos=[]
         cls.list_galleries=[]
         cls.dictionary={"notas":None,"galerias":None,"videos":None}  
-
-print(Search.find_news("videos"))

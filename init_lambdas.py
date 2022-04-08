@@ -1,14 +1,22 @@
-import json   
-from search import Search
-
-
+import json
+from management.clients.better_news_client import BetterNewsClient
+from management.clients.latest_client import LatestClient
+from management.clients.search_client import SearchClient
 
 def lambda_function(event,context):
     try:
         proxi_event= __build_proxy_event(event)
-        if proxi_event.get('word',None):
-            return buildHttpResponse(Search.find_news(proxi_event['word']),200)
-        return buildHttpResponse("word paremeter required",500)
+        resource_event= event['resource'].replace('/','')
+        
+        if resource_event == 'search':
+            if proxi_event.get('word',None):
+                return buildHttpResponse(SearchClient.perform(proxi_event['word']),200)
+            return buildHttpResponse("word paremeter required",500)
+        else:
+            if resource_event == 'latest':
+                return buildHttpResponse(LatestClient.perform(),200)
+            if resource_event == 'betterNews':
+                return buildHttpResponse(BetterNewsClient.perform(),200)
     except Exception as err:
         return buildHttpResponse(str(err),500)
 
@@ -36,4 +44,6 @@ def __build_event_body(event):
     if isinstance(event, dict):
         return event.get('body', event)
 
-print(Search.find_news("videos"))
+#print(json.dumps(__santitized_body(LatestClient.perform())))
+#print(json.dumps(__santitized_body(BetterNewsClient.perform())))
+#print(json.dumps(__santitized_body(SearchClient.perform("koala"))))
