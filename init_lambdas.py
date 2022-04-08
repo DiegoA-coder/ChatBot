@@ -5,17 +5,16 @@ from management.clients.search_client import SearchClient
 
 def lambda_function(event,context):
     try:
-        proxi_event= __build_proxy_event(event)
         resource_event= event['resource'].replace('/','')
-        
         if resource_event == 'search':
+            proxi_event= __build_proxy_event(event)
             if proxi_event.get('word',None):
                 return buildHttpResponse(SearchClient.perform(proxi_event['word']),200)
             return buildHttpResponse("word paremeter required",500)
         else:
             if resource_event == 'latest':
                 return buildHttpResponse(LatestClient.perform(),200)
-            if resource_event == 'betterNews':
+            if resource_event == 'betternews':
                 return buildHttpResponse(BetterNewsClient.perform(),200)
     except Exception as err:
         return buildHttpResponse(str(err),500)
@@ -43,7 +42,3 @@ def __santitized_body(body):
 def __build_event_body(event):
     if isinstance(event, dict):
         return event.get('body', event)
-
-#print(json.dumps(__santitized_body(LatestClient.perform())))
-#print(json.dumps(__santitized_body(BetterNewsClient.perform())))
-#print(json.dumps(__santitized_body(SearchClient.perform("koala"))))
