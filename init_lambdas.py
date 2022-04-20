@@ -31,7 +31,6 @@ def buildHttpResponse(body,statusCode):
         },
         'body': json.dumps(__santitized_body(body)),
         'statusCode': statusCode
-        
     }
 
 def __santitized_body(body):

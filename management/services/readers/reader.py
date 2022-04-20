@@ -8,15 +8,13 @@ class Reader:
     dictionary={"notas":None,"galerias":None,"videos":None}  
 
     @classmethod
-    def save_item(cls,title,contentId,link,type,section):
-        if (title != "" and contentId != "" and link != "" and type != "" and section != ""):
-            itemdictionary={"link":link,"contentId":contentId,"title":title,"section":section}
-            if (type=="article"):
-                cls.list_note.append(itemdictionary)
-            elif (type=="gallery"):
-                cls.list_galleries.append(itemdictionary)
-            elif (type=="video"):
-                cls.list_videos.append(itemdictionary)
+    def save_item(cls,itemdictionary,type):
+        if (type=="article"):
+            cls.list_note.append(itemdictionary)
+        elif (type=="gallery"):
+            cls.list_galleries.append(itemdictionary)
+        elif (type=="video"):
+            cls.list_videos.append(itemdictionary)
 
     @classmethod
     def update_dictionary(cls):

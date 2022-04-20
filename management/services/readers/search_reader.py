@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 from management.services.readers.reader import Reader
 from management.services.request_service import RequestService
 
@@ -26,8 +27,10 @@ class SearchReader(Reader):
             contentId=itemResult["contentId"]
             link =itemResult["url"]
             section=itemResult["category"]
+            date=itemResult["date"]
             type=itemResult["type"]
-            cls.save_item(title,contentId,link,type,section)
+            itemdictionary={"link":link,"contentId":contentId,"title":title,"section":section,"date":date}
+            cls.save_item(itemdictionary,type)
           except Exception as err:
             print('Error occurred: {err}')
       cls.update_dictionary()

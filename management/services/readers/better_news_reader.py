@@ -29,7 +29,8 @@ class BetterNewsReader(Reader):
                 link =item["url"]
                 section=item["category"]
                 type=item["type"]
-                cls.save_item(title,contentId,link,type,section)
+                itemdictionary={"link":link,"contentId":contentId,"title":title,"section":section}
+                cls.save_item(itemdictionary,type)
           except Exception as err:
             print('Error occurred in item: ',err)
       cls.update_dictionary()
