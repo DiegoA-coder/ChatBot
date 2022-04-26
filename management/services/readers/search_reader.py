@@ -1,4 +1,3 @@
-from dataclasses import dataclass
 from management.services.readers.reader import Reader
 from management.services.request_service import RequestService
 
@@ -26,7 +25,7 @@ class SearchReader(Reader):
             title=itemResult["title"]
             contentId=itemResult["contentId"]
             link =itemResult["url"]
-            section=itemResult["category"]
+            section=itemResult["sectionTag"][0]["title"]
             date=itemResult["date"]
             type=itemResult["type"]
             itemdictionary={"link":link,"contentId":contentId,"title":title,"section":section,"date":date}

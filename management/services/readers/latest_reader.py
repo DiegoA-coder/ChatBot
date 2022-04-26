@@ -34,7 +34,7 @@ class LatestReader(Reader):
                       title=item["title"]
                       contentId=item["contentId"]
                       link =item["url"]
-                      section=item["category"]
+                      section=item["sectionTag"][0]["title"]
                       type=item["type"]
                       itemdictionary={"link":link,"contentId":contentId,"title":title,"section":section}
                       cls.save_item(itemdictionary,type)
