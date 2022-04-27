@@ -17,7 +17,7 @@ class SearchReader(Reader):
         try:
           results = jsonRequest["results"]
         except Exception as err:
-          print('Error occurred: {err}')  
+          print('Error occurred: ',err)  
           return cls.dictionary;
 
         for itemResult in results:
@@ -28,9 +28,16 @@ class SearchReader(Reader):
             section=itemResult["sectionTag"][0]["title"]
             date=itemResult["date"]
             type=itemResult["type"]
-            itemdictionary={"link":link,"contentId":contentId,"title":title,"section":section,"date":date}
+
+            if (type=="video"):
+              jsonVideo=RequestService.perform(itemResult["url"]+"?_renderer=json")
+              videoId=jsonVideo["player"][0]["videoId"]
+            else:
+              videoId=""
+
+            itemdictionary={"link":link,"contentId":contentId,"title":title,"section":section,"date":date,"video":videoId}
             cls.save_item(itemdictionary,type)
           except Exception as err:
-            print('Error occurred: {err}')
+            print('Error occurred: ',err)
       cls.update_dictionary()
       return cls.dictionary
