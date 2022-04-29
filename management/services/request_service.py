@@ -13,5 +13,5 @@ class RequestService:
         print("Error occurred in request")
         return None
     except Exception as err:
-      print(f'Error occurred in request: {err}')
+      print(f'Error occurred in request: ',err)
       return None

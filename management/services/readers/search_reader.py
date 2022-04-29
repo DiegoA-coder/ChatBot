@@ -20,23 +20,23 @@ class SearchReader(Reader):
           print('Error occurred: ',err)  
           return cls.dictionary;
 
-        for itemResult in results:
+        for item in results:
           try:
-            title=itemResult["title"]
-            contentId=itemResult["contentId"]
-            link =itemResult["url"]
-            section=itemResult["sectionTag"][0]["title"]
-            date=itemResult["date"]
-            type=itemResult["type"]
+            contentId=item["contentId"]
+            date=item["date"]
+            link =item["url"]
+            section=item["sectionTag"][0]["title"]
+            title=item["title"]
+            typeItem=item["type"]
 
-            if (type=="video"):
-              jsonVideo=RequestService.perform(itemResult["url"]+"?_renderer=json")
+            if (typeItem=="video"):
+              jsonVideo=RequestService.perform(item["url"]+"?_renderer=json")
               videoId=jsonVideo["player"][0]["videoId"]
             else:
               videoId=""
 
-            itemdictionary={"link":link,"contentId":contentId,"title":title,"section":section,"date":date,"video":videoId}
-            cls.save_item(itemdictionary,type)
+            itemdictionary={"contentId":contentId,"date":date,"link":link,"section":section,"title":title,"video":videoId}
+            cls.save_item(itemdictionary,typeItem)
           except Exception as err:
             print('Error occurred: ',err)
       cls.update_dictionary()

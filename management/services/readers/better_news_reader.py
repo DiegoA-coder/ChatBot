@@ -16,7 +16,7 @@ class BetterNewsReader(Reader):
         try:
           asides = jsonRequest["aside"]
         except Exception as err:
-          print('Error occurred in get main: {err}')  
+          print('Error occurred in get : ',err)  
           return cls.dictionary;
         for aside in asides:
           try:
@@ -28,9 +28,10 @@ class BetterNewsReader(Reader):
                 contentId=item["contentId"]
                 link =item["url"]
                 section=item["sectionTag"][0]["title"]
-                type=item["type"]
-                itemdictionary={"link":link,"contentId":contentId,"title":title,"section":section}
-                cls.save_item(itemdictionary,type)
+                date=item["date"]
+                typeItem=item["type"]
+                itemdictionary={"contentId":contentId,"date":date,"link":link,"section":section,"title":title}
+                cls.save_item(itemdictionary,typeItem)
           except Exception as err:
             print('Error occurred in item: ',err)
       cls.update_dictionary()

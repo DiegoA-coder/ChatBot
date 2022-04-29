@@ -1,6 +1,10 @@
-
+from datetime import datetime
+import locale
+      
 class Reader:
 
+    # Setea la variable LC_ALL al conjunto de código UTF-8 con descripción español España
+    locale.setlocale(locale.LC_ALL,'es_ES.UTF-8')
     list_note=[]
     list_videos=[]
     list_galleries=[]
@@ -18,9 +22,9 @@ class Reader:
 
     @classmethod
     def update_dictionary(cls):
-        cls.dictionary.update({"notas": cls.list_note})
-        cls.dictionary.update({"galerias": cls.list_galleries})
-        cls.dictionary.update({"videos": cls.list_videos})
+        cls.dictionary.update({"notas": sorted(cls.list_note, key=lambda d: datetime.strptime(d["date"], "%d %B, %Y"),reverse=True)})
+        cls.dictionary.update({"galerias": sorted(cls.list_galleries, key=lambda d: datetime.strptime(d["date"], "%d %B, %Y"),reverse=True)})
+        cls.dictionary.update({"videos": sorted(cls.list_videos, key=lambda d: datetime.strptime(d["date"], "%d %B, %Y"),reverse=True)})
     
     @classmethod
     def empty_lists(cls):
