@@ -29,16 +29,15 @@ class LatestReader(Reader):
                 for tab in tabs:
                   contents=tab["content"]
                   for content in contents:
-                    items= content["items"]
-                    for item in items:
-                      contentId=item["contentId"]
-                      date=item["date"]
-                      link =item["url"]
-                      section=item["sectionTag"][0]["title"]
-                      title=item["title"]
-                      typeItem=item["type"]
-                      itemdictionary={"contentId":contentId,"date":date,"link":link,"section":section,"title":title}
-                      cls.save_item(itemdictionary,typeItem)
+                    item= content["items"][0]
+                    contentId=item["contentId"]
+                    date=item["date"]
+                    link =item["url"]
+                    section=item["sectionTag"][0]["title"]
+                    title=item["title"]
+                    typeItem=item["type"]
+                    itemdictionary={"contentId":contentId,"date":date,"link":link,"section":section,"title":title}
+                    cls.save_item(itemdictionary,typeItem)
           except Exception as err:
             print('Error occurred in item: ',err)
       cls.update_dictionary()
