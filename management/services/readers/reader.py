@@ -22,10 +22,10 @@ class Reader:
 
     @classmethod
     def update_dictionary(cls):
-        cls.dictionary.update({"notas": sorted(cls.list_note, key=lambda d: datetime.strptime(d["date"], "%d %B, %Y"),reverse=True)})
-        cls.dictionary.update({"galerias": sorted(cls.list_galleries, key=lambda d: datetime.strptime(d["date"], "%d %B, %Y"),reverse=True)})
-        cls.dictionary.update({"videos": sorted(cls.list_videos, key=lambda d: datetime.strptime(d["date"], "%d %B, %Y"),reverse=True)})
-    
+        cls.dictionary.update({"notas": cls.list_note})
+        cls.dictionary.update({"galerias": cls.list_galleries})
+        cls.dictionary.update({"videos": cls.list_videos})
+
     @classmethod
     def empty_lists(cls):
         cls.list_note=[]
